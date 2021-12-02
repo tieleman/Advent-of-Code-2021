@@ -14,9 +14,9 @@ enum SubmarineCommand {
 
         switch submarineCommand {
         case "forward": self = .forward(distance)
-        case "down": self = .down(distance)
-        case "up": self = .up(distance)
-        default: return nil
+        case "down":    self = .down(distance)
+        case "up":      self = .up(distance)
+        default:        return nil
         }
     }
     
