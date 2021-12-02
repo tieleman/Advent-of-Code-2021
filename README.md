@@ -15,3 +15,8 @@ standalone scripts with external dependencies (such as [swift-algorithms](https:
 
 Used a couple of helpful functions from [swift-algorithms](https://github.com/apple/swift-algorithms)
 to massage and process the data without writing a bunch of boilerplate.
+
+## Day 2: Dive!
+
+Fairly straightforward, started with a quick 'n dirty solution, later changed it to use a bit more functional approach
+using map/reduce and avoiding local state/side effects.
