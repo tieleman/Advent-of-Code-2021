@@ -14,9 +14,9 @@ extension Collection where Self.Iterator.Element: RandomAccessCollection {
 
 extension Card {
     func isWinner(given drawnNumbers: [Int]) -> Bool {
-        return (self + self.transposed()).filter { setOfNumbers in
-            setOfNumbers.allSatisfy({ drawnNumbers.contains($0) })
-        }.count > 0
+        (self + self.transposed())
+            .filter({ setOfNumbers in setOfNumbers.allSatisfy({ drawnNumbers.contains($0) })})
+            .count > 0
     }
     
     func score(given drawnNumbers: [Int]) -> Int {
