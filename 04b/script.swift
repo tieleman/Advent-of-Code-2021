@@ -35,19 +35,13 @@ extension Array where Element == Card {
         var localDrawOrder : [Int] = drawOrder.reversed()
         var drawnNumbers = [Int]()
         var cardsThatWon = [Card]()
-        var found = false
-
-        while cardsThatWon.count < cards.count, !found, let next = localDrawOrder.popLast() {
+        
+        while cardsThatWon.count < cards.count, let next = localDrawOrder.popLast() {
             // perform bingo
             drawnNumbers.append(next)
 
             for card in cards.filter({ !cardsThatWon.contains($0) && $0.isWinner(given: drawnNumbers) }) {
-                if !cardsThatWon.contains(card) {
-                    cardsThatWon.append(card)
-                } else {
-                    found = true
-                    break
-                }
+                cardsThatWon.append(card)
             }
         }
 
