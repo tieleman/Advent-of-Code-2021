@@ -29,11 +29,25 @@ extension Card {
     }
 }
 
-let bingoData = try! String(contentsOfFile: "input.txt")
-    .components(separatedBy: "\n\n")
+extension Array where Element == Card {
+    func findFirstWinnerScore(given drawOrder: [Int]) -> Int? {
+        var cards = self
+        var localDrawOrder : [Int] = drawOrder.reversed()
+        var drawnNumbers = [Int]()
+        var winner : Card? = nil
+        
+        while winner == nil, let next = localDrawOrder.popLast() {
+            // perform bingo
+            drawnNumbers.append(next)
+            winner = cards.first(where: { $0.isWinner(given: drawnNumbers) })
+        }
 
-var drawOrder = Array(bingoData[0].split(separator: ",").compactMap({ Int($0) }).reversed())
+        return winner?.score(given: drawnNumbers)
+    }
+}
 
+let bingoData = try! String(contentsOfFile: "input.txt").components(separatedBy: "\n\n")
+let drawOrder = bingoData[0].split(separator: ",").compactMap({ Int($0) })
 let cards : [Card] = bingoData[1..<bingoData.count].map { card in
     let lines = card.components(separatedBy: .newlines)
     let card : Card = lines.map { row in
@@ -42,16 +56,7 @@ let cards : [Card] = bingoData[1..<bingoData.count].map { card in
     return card
 }
 
-var drawnNumbers = [Int]()
-var winner : Card? = nil
-
-while winner == nil, let next = drawOrder.popLast() {
-    // perform bingo
-    drawnNumbers.append(next)
-    winner = cards.first(where: { $0.isWinner(given: drawnNumbers) })
-}
-
-if let winner = winner {
-    print(winner.score(given: drawnNumbers))
+if let score = cards.findFirstWinnerScore(given: drawOrder) {
+    print(score)
 }
 

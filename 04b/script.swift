@@ -29,12 +29,35 @@ extension Card {
     }
 }
 
-let bingoData = try! String(contentsOfFile: "input.txt")
-    .components(separatedBy: "\n\n")
+extension Array where Element == Card {
+    func findLastWinnerScore(given drawOrder: [Int]) -> Int? {
+        var cards = self
+        var localDrawOrder : [Int] = drawOrder.reversed()
+        var drawnNumbers = [Int]()
+        var cardsThatWon = [Card]()
+        var found = false
 
-var drawOrder = Array(bingoData[0].split(separator: ",").compactMap({ Int($0) }).reversed())
+        while cardsThatWon.count < cards.count, !found, let next = localDrawOrder.popLast() {
+            // perform bingo
+            drawnNumbers.append(next)
 
-var cards : [Card] = bingoData[1..<bingoData.count].map { card in
+            for card in cards.filter({ !cardsThatWon.contains($0) && $0.isWinner(given: drawnNumbers) }) {
+                if !cardsThatWon.contains(card) {
+                    cardsThatWon.append(card)
+                } else {
+                    found = true
+                    break
+                }
+            }
+        }
+
+        return cardsThatWon.last?.score(given: drawnNumbers)
+    }
+}
+
+let bingoData = try! String(contentsOfFile: "input.txt").components(separatedBy: "\n\n")
+let drawOrder = bingoData[0].split(separator: ",").compactMap({ Int($0) })
+let cards : [Card] = bingoData[1..<bingoData.count].map { card in
     let lines = card.components(separatedBy: .newlines)
     let card : Card = lines.map { row in
         row.components(separatedBy: .whitespaces).compactMap({ Int($0) })
@@ -42,25 +65,8 @@ var cards : [Card] = bingoData[1..<bingoData.count].map { card in
     return card
 }
 
-var drawnNumbers = [Int]()
-var cardsThatWon = [Card]()
-var found = false
 
-while cardsThatWon.count < cards.count, !found, let next = drawOrder.popLast() {
-    // perform bingo
-    drawnNumbers.append(next)
-
-    for card in cards.filter({ !cardsThatWon.contains($0) && $0.isWinner(given: drawnNumbers) }) {
-        if !cardsThatWon.contains(card) {
-            cardsThatWon.append(card)
-        } else {
-            found = true
-            break
-        }
-    }
-}
-
-if let winner = cardsThatWon.last {
-    print(winner.score(given: drawnNumbers))
+if let score = cards.findLastWinnerScore(given: drawOrder) {
+    print(score)
 }
 
