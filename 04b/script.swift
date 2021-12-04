@@ -11,10 +11,22 @@ extension Collection where Self.Iterator.Element: RandomAccessCollection {
         }
     }
 }
-func isWinner(_ card: Card) -> Bool {
-    return (card + card.transposed()).filter { setOfNumbers in
-        setOfNumbers.allSatisfy({ drawnNumbers.contains($0) })
-    }.count > 0
+
+extension Card {
+    func isWinner(given drawnNumbers: [Int]) -> Bool {
+        return (self + self.transposed()).filter { setOfNumbers in
+            setOfNumbers.allSatisfy({ drawnNumbers.contains($0) })
+        }.count > 0
+    }
+    
+    func score(given drawnNumbers: [Int]) -> Int {
+        let sum = self
+                    .flatMap({ $0 })
+                    .filter({ !drawnNumbers.contains($0) })
+                    .reduce(0, +)
+        
+        return sum * drawnNumbers.last!
+    }
 }
 
 let bingoData = try! String(contentsOfFile: "input.txt")
@@ -38,7 +50,7 @@ while cardsThatWon.count < cards.count, !found, let next = drawOrder.popLast() {
     // perform bingo
     drawnNumbers.append(next)
 
-    for card in cards.filter({ !cardsThatWon.contains($0) && isWinner($0) }) {
+    for card in cards.filter({ !cardsThatWon.contains($0) && $0.isWinner(given: drawnNumbers) }) {
         if !cardsThatWon.contains(card) {
             cardsThatWon.append(card)
         } else {
@@ -49,7 +61,6 @@ while cardsThatWon.count < cards.count, !found, let next = drawOrder.popLast() {
 }
 
 if let winner = cardsThatWon.last {
-    var numbers = winner.flatMap({ $0 }).filter({ !drawnNumbers.contains($0) })
-    print(numbers.reduce(0, +) * drawnNumbers.last!)
+    print(winner.score(given: drawnNumbers))
 }
 
