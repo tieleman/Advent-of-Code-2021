@@ -39,10 +39,7 @@ extension Array where Element == Card {
         while cardsThatWon.count < cards.count, let next = localDrawOrder.popLast() {
             // perform bingo
             drawnNumbers.append(next)
-
-            for card in cards.filter({ !cardsThatWon.contains($0) && $0.isWinner(given: drawnNumbers) }) {
-                cardsThatWon.append(card)
-            }
+            cardsThatWon.append(contentsOf: cards.filter({ !cardsThatWon.contains($0) && $0.isWinner(given: drawnNumbers) }))
         }
 
         return cardsThatWon.last?.score(given: drawnNumbers)
@@ -58,7 +55,6 @@ let cards : [Card] = bingoData[1..<bingoData.count].map { card in
     }
     return card
 }
-
 
 if let score = cards.findLastWinnerScore(given: drawOrder) {
     print(score)
