@@ -34,3 +34,8 @@ have to mentally deal with types like `[[[Int]]]`.
 
 TIL: `signum()` is awesome. In the end part 2 is actually cleaner than part 1. I could have just used that with the
 additional constraint of filtering out diagonals for part 1.
+
+## Day 6: Lanternfish
+
+Did the first part the naive way, which of course didn't work for part 2. My new favorite Swift toy is for sure
+`myDict[myKey, default: 0] += 1` where you don't have to worry about dealing with `nil`s.
