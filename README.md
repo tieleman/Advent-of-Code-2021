@@ -42,5 +42,7 @@ Did the first part the naive way, which of course didn't work for part 2. My new
 
 ## Day 7: The Treachery of Whales
 
-Not too sure about this. For part 1 the median sufficed, but for part 2 I used the average, but the rounding was off
-such that the sample input would fail, but the actual puzzle input would pass. "Fixed" this by using a custom rounding.
+For part 1 the median sufficed, but for part 2 I (initially) used the average, but the rounding was off
+such that the sample input would fail, but the actual puzzle input would pass. Because of the limited
+input size in the end I calculated the fuel cost for all position between the first and the last crab,
+which ran quick enough.
