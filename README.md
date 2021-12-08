@@ -51,4 +51,4 @@ which ran quick enough. TIL: Triangular numbers.
 
 Good fun, I was already expecting part 2 to require decoding the numbers, but did solve part 1 the simple
 way, by simply counting string lengths. Part 2 required writing down the patterns, but then it was fairly
-easy by process of elimination.
+easy by process of elimination. Not too happy with the `inout` mutable state and force unwraps, but it works.
