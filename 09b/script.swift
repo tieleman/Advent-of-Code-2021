@@ -26,11 +26,9 @@ func growBasin(from origin: Point, currentSet: Set<Point>?=nil) -> Set<Point> {
     // right
     if x < entries[y].count - 1 { candidates.append(Point(x: x+1, y: y)) }
 
-    candidates.forEach { point in
-        activeSet = activeSet.union(growBasin(from: point, currentSet: activeSet))
+    return candidates.reduce(activeSet) { partialResult, point in
+        partialResult.union(growBasin(from: point, currentSet: partialResult))
     }
-    
-    return activeSet
 }
 
 let entries = try! String(contentsOfFile: "input.txt")
