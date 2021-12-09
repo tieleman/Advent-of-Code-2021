@@ -26,8 +26,6 @@ func growBasin(from origin: Point, currentSet: Set<Point>?=nil) -> Set<Point> {
     // right
     if x < entries[y].count - 1 { candidates.append(Point(x: x+1, y: y)) }
 
-    guard !candidates.isEmpty else { return activeSet }
-    
     candidates.forEach { point in
         activeSet = activeSet.union(growBasin(from: point, currentSet: activeSet))
     }
