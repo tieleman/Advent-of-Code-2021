@@ -52,3 +52,16 @@ which ran quick enough. TIL: Triangular numbers.
 Good fun, I was already expecting part 2 to require decoding the numbers, but did solve part 1 the simple
 way, by simply counting string lengths. Part 2 required writing down the patterns, but then it was fairly
 easy by process of elimination. Not too happy with the `inout` mutable state and force unwraps, but it works.
+
+## Day 9: Smoke Basin
+
+Nice to see a MS Paint style floodfill in action.
+
+## Day 10: Syntax Scoring
+
+Push and pop all the way.
+
+## Day 11: Dumbo Octopus
+
+Part 2 surprisingly easy after part 1. Only difference is not halting after 100 steps, but when the grid is
+all zeros.
