@@ -63,16 +63,11 @@ let octopi = try! String(contentsOfFile: "input.txt")
     }
 
 var currentGrid = octopi
-var found = false
-var i = 1
+var i = 0
 
-while !found {
+while !currentGrid.allZero() {
     currentGrid = currentGrid.calculateNextStep()
-
-    if currentGrid.allZero() {
-        found = true
-        print(i)
-    }
-              
     i += 1
 }
+
+print(i)
