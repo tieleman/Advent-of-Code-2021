@@ -65,3 +65,7 @@ Push and pop all the way.
 
 Part 2 surprisingly easy after part 1. Only difference is not halting after 100 steps, but when the grid is
 all zeros.
+
+## Day 12: Passage Pathing
+
+Did not enjoy this, mainly because I find recursion problems not really interesting. Implemented a DFS for this.
