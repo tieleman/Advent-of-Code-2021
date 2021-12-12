@@ -15,9 +15,7 @@ extension Cave {
     }
     
     var connectedCaves: [Cave] {
-        connections.filter({ $0.from == self || $0.to == self })
-            .flatMap({ [$0.to, $0.from] })
-            .filter({ $0 != self })
+        connections[self, default: []]
     }
 
     static var start: Cave = "start"
@@ -36,7 +34,7 @@ func generateRoute(visited: Route) {
     var localVisited = visited
     
     if localVisited.last! == Cave.end {
-        routes.append(localVisited)
+        routeCounter += 1
         return
     }
     
@@ -49,15 +47,21 @@ func generateRoute(visited: Route) {
     }
 }
 
-let connections = try! String(contentsOfFile: "input.txt")
+let connections : [Cave: [Cave]] = try! String(contentsOfFile: "input.txt")
     .components(separatedBy: .newlines)
     .map { line -> Connection in
         let components = line.components(separatedBy: "-")
         return Connection(from: components[0], to: components[1])
     }
+    .reduce([Cave:[Cave]](), { partialResult, next in
+        var local = partialResult
+        local[next.from, default: []].append(next.to)
+        local[next.to, default: []].append(next.from)
+        return local
+    })
 
-var routes = [Route]()
+var routeCounter = 0
 
 generateAllRoutes()
 
-print(routes.count)
+print(routeCounter)
