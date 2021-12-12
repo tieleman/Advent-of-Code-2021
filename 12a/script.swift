@@ -17,22 +17,22 @@ extension Cave {
     static var start: Cave = "start"
     static var end: Cave   = "end"
     
-    func connectedCaves(_ connections: [Connection]) -> [Cave] {
+    var connectedCaves: [Cave] {
         connections.filter({ $0.from == self || $0.to == self })
             .flatMap({ [$0.to, $0.from] })
             .filter({ $0 != self })
     }
 }
 
-func generateAllRoutes(from connections: [Connection]) {
+func generateAllRoutes() {
     var visited = Route()
     
     visited.append(Cave.start)
 
-    generateRoute(from: connections, visited: visited)
+    generateRoute(visited: visited)
 }
 
-func generateRoute(from connections: [Connection], visited: Route) {
+func generateRoute(visited: Route) {
     var localVisited = visited
     
     if localVisited.last! == Cave.end {
@@ -40,10 +40,10 @@ func generateRoute(from connections: [Connection], visited: Route) {
         return
     }
     
-    visited.last!.connectedCaves(connections).forEach { cave in
+    visited.last!.connectedCaves.forEach { cave in
         if (!visited.contains(cave) || cave.canBeRevisitted) {
             localVisited.append(cave)
-            generateRoute(from: connections, visited: localVisited)
+            generateRoute(visited: localVisited)
             localVisited.popLast()
         }
     }
@@ -58,6 +58,6 @@ let connections = try! String(contentsOfFile: "input.txt")
 
 var routes = [Route]()
 
-generateAllRoutes(from: connections)
+generateAllRoutes()
 
 print(routes.count)
