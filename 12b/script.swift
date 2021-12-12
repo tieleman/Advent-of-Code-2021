@@ -20,18 +20,18 @@ extension Cave {
         }
     }
     
-    var isSmallCave: Bool {
-        self.uppercased() != self
-    }
-    
-    static var start: Cave = "start"
-    static var end: Cave   = "end"
-    
     var connectedCaves: [Cave] {
         connections.filter({ $0.from == self || $0.to == self })
             .flatMap({ [$0.to, $0.from] })
             .filter({ $0 != self })
     }
+
+    var isSmallCave: Bool {
+        self.uppercased() != self
+    }
+
+    static var start: Cave = "start"
+    static var end: Cave   = "end"
 }
 
 func generateAllRoutes() {
