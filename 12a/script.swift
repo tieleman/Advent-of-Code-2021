@@ -1,20 +1,21 @@
 #!/usr/bin/swift sh
 import Foundation
 
+typealias Cave = String
+typealias Route = [Cave]
+
 struct Connection {
     let from: Cave
     let to: Cave
 }
 
-struct Cave: Equatable {
-    let name: String
-    
+extension Cave {
     var canBeRevisitted: Bool {
-        name.uppercased() == name
+        self.uppercased() == self
     }
     
-    static var start: Cave = Cave(name: "start")
-    static var end: Cave   = Cave(name: "end")
+    static var start: Cave = "start"
+    static var end: Cave   = "end"
     
     func connectedCaves(_ connections: [Connection]) -> [Cave] {
         connections.filter({ $0.from == self || $0.to == self })
@@ -23,17 +24,15 @@ struct Cave: Equatable {
     }
 }
 
-typealias Route = [Cave]
-
 func generateAllRoutes(from connections: [Connection]) {
-    var visited = [Cave]()
+    var visited = Route()
     
     visited.append(Cave.start)
 
     generateRoute(from: connections, visited: visited)
 }
 
-func generateRoute(from connections: [Connection], visited: [Cave]) {
+func generateRoute(from connections: [Connection], visited: Route) {
     var localVisited = visited
     
     if localVisited.last! == Cave.end {
@@ -54,7 +53,7 @@ let connections = try! String(contentsOfFile: "input.txt")
     .components(separatedBy: .newlines)
     .map { line -> Connection in
         let components = line.components(separatedBy: "-")
-        return Connection(from: Cave(name: components[0]), to: Cave(name: components[1]))
+        return Connection(from: components[0], to: components[1])
     }
 
 var routes = [Route]()
