@@ -11,7 +11,7 @@ struct Connection {
 
 extension Cave {
     var canBeRevisitted: Bool {
-        if self == "start" || self == "end" { return false }
+        if self == Cave.start || self == Cave.end { return false }
         
         if !isSmallCave {
             return true
