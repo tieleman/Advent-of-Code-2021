@@ -59,7 +59,7 @@ func generateRoute(visited: Route) {
     }
 }
 
-let connections = try! String(contentsOfFile: "/Users/tieleman/Documents/Code/AoC/2021/12b/input.txt")
+let connections = try! String(contentsOfFile: "input.txt")
     .components(separatedBy: .newlines)
     .map { line -> Connection in
         let components = line.components(separatedBy: "-")
