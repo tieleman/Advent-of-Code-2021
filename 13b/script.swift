@@ -42,6 +42,7 @@ func printDots(_ dots: Set<Point>) {
         screen[dot.y][dot.x] = "#"
     }
     
+    print("")
     screen.forEach { line in
         print(line.joined(separator: ""))
     }
