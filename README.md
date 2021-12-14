@@ -69,3 +69,12 @@ all zeros.
 ## Day 12: Passage Pathing
 
 Did not enjoy this, mainly because I find recursion problems not really interesting. Implemented a DFS for this.
+
+## Day 13: Transparent Origami
+
+Bit of repetition, but couldn't be bothered to clean it up.
+
+## Day 14: Extended Polymerization
+
+`reduce(into:_:)` all the things! (in part 2)
+
