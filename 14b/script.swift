@@ -38,7 +38,7 @@ var characterCounts : [String: Int] = Array(components[0])
     }
 
 let output = (0..<40).reduce(pairCount) { partialResult, _ in
-    return updatePolymer(partialResult)
+    updatePolymer(partialResult)
 }
 
 print(characterCounts.values.max()! - characterCounts.values.min()!)
