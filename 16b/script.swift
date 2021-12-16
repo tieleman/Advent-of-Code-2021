@@ -59,16 +59,16 @@ func readNextPacket(from stream: inout [Character]) -> Packet {
     
     switch type {
     case 4:
-        var local = [Character]()
+        var number = [Character]()
         var finished = false
         
         while !finished {
             if stream.read(1).first! == "0" {
                 finished = true
             }
-            local += stream.read(4)
+            number += stream.read(4)
         }
-        return .literal(version: version, type: type, number: local.toInt())
+        return .literal(version: version, type: type, number: number.toInt())
     default:
         var packets = [Packet]()
         let lengthType = stream.read(1).first!
